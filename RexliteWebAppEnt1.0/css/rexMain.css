@@ -1,0 +1,53 @@
+﻿body {
+    background-color: #131313;
+}
+div.horizontal {
+    display: flex;
+    justify-content: center;
+}
+div.vertical {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.bottomDiv { /* this css will ensure the div stays on the bottom of page all the time */
+    background-color: #131313;
+    height: 20px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+.ListPageTopDiv {
+    background-color: #131313;
+    width: 95%;
+    height: 55px;
+    padding: 25px 70px 25px 25px; /*padding-top, padding-right, padding-bottom, padding-left */
+}
+.DeviceList {
+    width: 600px;
+    background-color: #131313;
+    margin-left: auto;
+    margin-right: auto;
+}
+.boxSt {
+    background-color: #131313;
+    cursor: pointer;
+    color: #AD8C41;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    float: left;
+    padding: 0;
+    text-align: left;
+}
+.hrSt {
+    height: 0.01%;
+    width: 100%;
+    display: block;
+    background-color: #424242;
+    padding: 0;
+}
