@@ -10,7 +10,8 @@ namespace RexliteWebAppEnt1._0
     {
         //This is the very first command to send to request the MaxBook ID info via tcpip client call
         public const string MaxBookStr = "0A13FFFFFFFFFFFF19820008FE7AF4";
-        public const string BleDeviceJsonList = "blelist.json"; 
+        public const string BleDeviceJsonList = "blelist.json";
+        public const string MAXAirDeviceJsonList = "MAXAirList.json";  
         public const int PortNumber = 4000;
 
         //16進位數字組成的字串轉換為Byte[]

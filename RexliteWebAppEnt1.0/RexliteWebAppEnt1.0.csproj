@@ -105,6 +105,7 @@
     <Content Include="images\APP_Button_Rename.png" />
     <Content Include="images\APP_Button_REXLiTE.png" />
     <Content Include="App_Data\blelist.json" />
+    <Content Include="App_Data\MAXAirlist.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\APP_Button_UP-OFF.png" />
     <Content Include="images\APP_Button_UP-ON.png" />
