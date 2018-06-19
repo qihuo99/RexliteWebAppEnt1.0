@@ -12,61 +12,127 @@ namespace RexliteWebAppEnt1._0
 {
     public class RexliteMAXAirLib
     {
-        public const string searchMaxAirDeviceCmd = "ls";
-        public const int CoolMasterPortNumber = 10102;
 
-        public static double FahrenheitToCelsius(double tempIn)
+        public string ConvertCoolMasterIfconfigRetrievelToJson(string[] list)
         {
-            Double fCels = (tempIn - 32) * (5 / 9);
+            string result = "";
+            StringBuilder sbCallback = new StringBuilder();
+            int i = 0;
+            string mac = string.Empty;
+            string link = string.Empty;
+            string ip = string.Empty;
+            string netmask = string.Empty;
+            string gateway = string.Empty;
+            string dns1 = string.Empty;
+            string dns2 = string.Empty;
+            string autoip = string.Empty;
 
-            return fCels;
-        }
-        public static double CelsiusToFahenreit(double tempIn)
-        {
-            double dFahr = (1.8) * (tempIn + 32);
-
-            return dFahr;
-        }
-        public static string[] SplitWhitespace(string input)
-        {
-            char[] whitespace = new char[] { ' ', '\t' };
-            return input.Split(whitespace);
-        }
-
-        public bool CheckJsonFile(string jsonFile)
-        {
-            string BleJsonListFilePath = HttpContext.Current.Server.MapPath("~/App_Data/");
-            string fullFileName = BleJsonListFilePath + jsonFile;
-            if (File.Exists(fullFileName))
+            try
             {
-                return true;
+                for (i = 0; i < list.Length; i++)
+                {
+                    if (list[i].ToUpper() == "OK")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        string[] devListInfo = ExtensionMethods.SplitWhitespace(list[i]);
+
+                        //use linq to remove empty array elements
+                        devListInfo = devListInfo.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                        //var splitted0 = devListInfo[0].Split(' ');  //splite string on :
+                        //string[] splitted0 = ExtensionMethods.SplitWhitespace(devListInfo[0]);
+
+                        if (devListInfo[0].ToString().Trim() == "MAC")
+                        {
+                            mac = devListInfo[2].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "Link")
+                        {
+                            link = devListInfo[2].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "IP")
+                        {
+                            ip = devListInfo[2].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "Netmask:")
+                        {
+                            netmask = devListInfo[1].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "Gateway:")
+                        {
+                            gateway = devListInfo[1].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "DNS1")
+                        {
+                            dns1 = devListInfo[2].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "DNS2")
+                        {
+                            dns2 = devListInfo[2].ToString().Trim();
+                        }
+                        else if (devListInfo[0].ToString().Trim() == "Autoip")
+                        {
+                            autoip = devListInfo[2].ToString().Trim();
+                        }
+
+                    }
+                }
+
+                var CoolMasterIfconfig = new
+                {
+                    MAC = mac,
+                    Link = link,
+                    IP = ip,
+                    Netmask = netmask,
+                    Gateway = gateway,
+                    DNS1 = dns1,
+                    DNS2 = dns2,
+                    Autoip = autoip
+                };
+
+                var json = JsonConvert.SerializeObject(CoolMasterIfconfig);
+                result = json;
             }
-            else
+            catch (Exception ex)
             {
-                return false; 
+                result = "Error..... " + ex.StackTrace;
             }
+            return result;
         }
 
-        public bool FormatAndSaveAirDeviceJsonFile(string listJson)
+        public bool FormatAndSaveAirDeviceJsonFile(string listJson, string fileheader, string fileNameToBeSaved)
         {
             bool fileSaved = false;
-            string jsonFile = "{\"MAXAirDevice\":[" + listJson;
+            //string jsonFile = "{\"MAXAirDevice\":[" + listJson;
+            string jsonFile = fileheader + listJson;
             jsonFile = jsonFile + "]}";
-            //res = "{\"BleDevice\":[" + res;
-            //res = "[" + res;
-            //res = res + "]}";
-            //res = res + "]";
 
             //This will locate the Example.xml file in the App_Data folder.. (App_Data is a good place to put data files.)
-            string BleJsonListFilePath = HttpContext.Current.Server.MapPath("~/App_Data/");        
+            string BleJsonListFilePath = HttpContext.Current.Server.MapPath("~/App_Data/");
+            string getSaveFileName = string.Empty;
 
-            string AirBleFileName = BleJsonListFilePath + ExtensionMethods.MAXAirDeviceJsonList;
-            if (File.Exists(AirBleFileName))
+            switch (fileNameToBeSaved)
             {
-                //Response.Write(AirBleFile + " 檔案存在");
-                File.Delete(@AirBleFileName);
+                case "BleDeviceJsonList":
+                    getSaveFileName = ExtensionMethods.BleDeviceJsonList;                 //連線哪台設備
+                    break;
+                case "MAXAirDeviceJsonList":
+                    getSaveFileName = ExtensionMethods.MAXAirDeviceJsonList;                //開通並讀取設備狀態資料
+                    break;
+                case "CoolMasterIfconfig":
+                    getSaveFileName = ExtensionMethods.CoolMasterIfconfigFile;                 //閃爍面板
+                    break;
+            }
+
+            string FileToBeSaved = BleJsonListFilePath + getSaveFileName;
+            if (File.Exists(FileToBeSaved))
+            {
+                File.Delete(@FileToBeSaved);  //Response.Write(AirBleFile + " 檔案存在");
                 //File.WriteAllText(BleJsonListFilePath, ExtensionMethods.MAXAirDeviceJsonList);
-                File.WriteAllText(AirBleFileName, jsonFile, Encoding.UTF8);
+                File.WriteAllText(FileToBeSaved, jsonFile, Encoding.UTF8);
                 //Write the file
                 //using (System.IO.StreamWriter outfile = new System.IO.StreamWriter(@"C:\yourDirectory\yourFile.txt"))
                 //{
@@ -77,7 +143,7 @@ namespace RexliteWebAppEnt1._0
             else
             {
                 //Response.Write(BleJsonFileName + " 檔案不存在");
-                File.WriteAllText(AirBleFileName, jsonFile, Encoding.UTF8);
+                File.WriteAllText(FileToBeSaved, jsonFile, Encoding.UTF8);
                 fileSaved = true;
             }
 
@@ -87,7 +153,7 @@ namespace RexliteWebAppEnt1._0
         //////////////////////////////////////////////////////////////////////////////////////
         //This function will convert a string array to Json array for MAXAir devices detected
         //////////////////////////////////////////////////////////////////////////////////////
-        public string ConvertMAXAirStringToJson(string[] list)
+        public string ConvertMAXAirSearchStringToJson(string[] list)
         {
             string result = "";
             StringBuilder sbAir = new StringBuilder();
@@ -103,7 +169,7 @@ namespace RexliteWebAppEnt1._0
                     }
                     else
                     {
-                        string[] devListInfo = SplitWhitespace(list[i]);
+                        string[] devListInfo = ExtensionMethods.SplitWhitespace(list[i]);
 
                         //use linq to remove empty array elements
                         devListInfo = devListInfo.Where(x => !string.IsNullOrEmpty(x)).ToArray();
@@ -143,7 +209,7 @@ namespace RexliteWebAppEnt1._0
             return result;
         }
 
-        public string[] searchMAXAirDevices(string DHCPIPAddr)
+        public string[] makeCoolMasterClientCall(string DHCPIPAddr, string Cmd)
         {
             string[] lines = new string[10000];
 
@@ -153,7 +219,7 @@ namespace RexliteWebAppEnt1._0
                 byte[] s2 = { 108, 115, 10, 13 };
 
                 TcpClient tcpclnt = new TcpClient();  //Console.WriteLine("Connecting.....");
-                tcpclnt.Connect(DHCPIPAddr, CoolMasterPortNumber);
+                tcpclnt.Connect(DHCPIPAddr, ExtensionMethods.CoolMasterPortNumber);
                 // use the ipaddress as in the server program
 
                 //Console.WriteLine("Connected");
@@ -163,7 +229,7 @@ namespace RexliteWebAppEnt1._0
                 //String str = "ifconfig\r\n";
                 //String str = "stat\r\n";
                 //String str = "ls\r\n";
-                String str = searchMaxAirDeviceCmd + "\r\n";  // append Carriage return + Line Feed for CoolMaster only
+                String str = Cmd + "\r\n";  // append Carriage return + Line Feed for CoolMaster only
                 Stream stm = tcpclnt.GetStream();
 
                 ASCIIEncoding asen = new ASCIIEncoding();
@@ -175,7 +241,7 @@ namespace RexliteWebAppEnt1._0
                 var responseData = "";
                 byte[] bb = new byte[10000];
                 int k = stm.Read(bb, 0, 10000);
-                Thread.Sleep(4000);
+                Thread.Sleep(2000);
 
                 for (int i = 0; i < k; i++)
                 {

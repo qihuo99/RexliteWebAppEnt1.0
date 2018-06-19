@@ -14,23 +14,37 @@ namespace RexliteWebAppEnt1._0
         RexliteLib rexliteLib = new RexliteLib();
         RexliteMAXAirLib rexliteAirLib = new RexliteMAXAirLib();
         public bool MAXAirFileExists = false;
+        public bool CoolMasterIfconfigFileExists = false;
 
         protected void Page_PreLoad(object sender, EventArgs e)
         {
+            //string getCoolMasterCallIPCmd = rexliteAirLib.ge 
 
-            if (rexliteAirLib.CheckJsonFile(ExtensionMethods.MAXAirDeviceJsonList))
+            if (ExtensionMethods.CheckJsonFile(ExtensionMethods.CoolMasterIfconfigFile))
             {
-                MAXAirFileExists = true;
+                CoolMasterIfconfigFileExists = true;
             }
             else
-            {
-                MAXAirFileExists = false;
-                string[] airDeviceList = rexliteAirLib.searchMAXAirDevices("192.168.1.129");
-                string output = rexliteAirLib.ConvertMAXAirStringToJson(airDeviceList);
-                bool saveOutput = rexliteAirLib.FormatAndSaveAirDeviceJsonFile(output);
-
+            {  
+                CoolMasterIfconfigFileExists = false;  //needs to create a json file and save here
+                string[] createCoolMasterIfconfigCmdList = rexliteAirLib.makeCoolMasterClientCall("192.168.1.129", ExtensionMethods.getCoolMasterDHCPCmd);
+                string initCoolMasterIfconfigJson = rexliteAirLib.ConvertCoolMasterIfconfigRetrievelToJson(createCoolMasterIfconfigCmdList);
+                //bool getFileSavedStatus = rexliteAirLib.FormatAndSaveAirDeviceJsonFile(initCoolMasterIfconfigJson, "{\"CoolMasterIfconfig\":[", "CoolMasterIfconfig");
+                CoolMasterIfconfigFileExists = rexliteAirLib.FormatAndSaveAirDeviceJsonFile(initCoolMasterIfconfigJson, ExtensionMethods.CoolMasterIfconfigJsonHeader, ExtensionMethods.CoolMasterFile);
 
             }
+
+            //if (ExtensionMethods.CheckJsonFile(ExtensionMethods.MAXAirDeviceJsonList))
+            //{
+            //    MAXAirFileExists = true;
+            //}
+            //else
+            //{
+            //    MAXAirFileExists = false;
+            //    //string[] airDeviceList = rexliteAirLib.searchMAXAirDevices("192.168.1.129");
+            //    //string output = rexliteAirLib.ConvertMAXAirSearchStringToJson(airDeviceList);
+            //    //bool saveOutput = rexliteAirLib.FormatAndSaveAirDeviceJsonFile(output);
+            //}
 
             //int u = 9;
 

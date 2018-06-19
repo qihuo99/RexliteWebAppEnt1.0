@@ -47,7 +47,7 @@ namespace RexliteWebAppEnt1._0
         public string initDefaultPageDeviceArr()
         {
             string[] list = initMainListStringArr();
-            string retr = ConvertStringToJson(list);
+            string retr = ConvertBleDeviceStringToJson(list);
 
             return retr;
         }
@@ -182,7 +182,7 @@ namespace RexliteWebAppEnt1._0
         //////////////////////////////////////////////////////////////////////////////////////
         //This function will convert a string array to Json array
         //////////////////////////////////////////////////////////////////////////////////////
-        public string ConvertStringToJson(string[] devlist)
+        public string ConvertBleDeviceStringToJson(string[] devlist)
         {
             string result = "";
             StringBuilder sb = new StringBuilder();
@@ -277,6 +277,38 @@ namespace RexliteWebAppEnt1._0
                     break;
             }
             return deviceID;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////
+        //This function will create a DHCP IP Address json file from a single string
+        //////////////////////////////////////////////////////////////////////////////////////
+        public string CreateDHCPIPAddressJsonFile(string ipAddr)
+        {
+            string result = "";
+            StringBuilder sb = new StringBuilder();
+
+            try
+            {
+                var IPFile = new
+                {
+                    CurrentIP = ipAddr
+                };
+
+                var json = JsonConvert.SerializeObject(IPFile);
+                sb.Append(json);
+
+                string res = sb.ToString().Trim();
+                res = "{\"CurrentIPAddress\":[" + res;
+                //res = "[" + res;
+                res = res + "]}";
+                //res = res + "]";
+                result = res;
+            }
+            catch (Exception ex)
+            {
+                result = "Error..... " + ex.StackTrace;
+            }
+            return result;
         }
 
         ////////////////////////////////////////////////////////////////////////////////

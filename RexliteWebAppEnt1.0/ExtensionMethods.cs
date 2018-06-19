@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -10,9 +11,22 @@ namespace RexliteWebAppEnt1._0
     {
         //This is the very first command to send to request the MaxBook ID info via tcpip client call
         public const string MaxBookStr = "0A13FFFFFFFFFFFF19820008FE7AF4";
-        public const string BleDeviceJsonList = "blelist.json";
-        public const string MAXAirDeviceJsonList = "MAXAirList.json";  
+        public const string BleDeviceJsonList = "BleDeviceList.json";
+        public const string MAXAirDeviceJsonList = "MAXAirDeviceList.json";
+        public const string CoolMasterIfconfigFile = "CoolMasterIfconfig.json";
+
+        public const string BleDeviceListJsonHeader = "{\"BleDeviceList\":[";
+        public const string MAXAirDeviceJsonHeader = "{\"MAXAirDevice\":[";
+        public const string CoolMasterIfconfigJsonHeader = "{\"CoolMasterIfconfig\":[";
+
+        public const string BleDeviceListFile = "BleDeviceJsonList";
+        public const string MAXAirDeviceFile = "MAXAirDeviceJsonList";
+        public const string CoolMasterFile = "CoolMasterIfconfig";
+
         public const int PortNumber = 4000;
+        public const string searchMaxAirDeviceCmd = "ls";
+        public const string getCoolMasterDHCPCmd = "ifconfig";
+        public const int CoolMasterPortNumber = 10102;
 
         //16進位數字組成的字串轉換為Byte[]
         public static byte[] HexToByte(this string hexString)
@@ -75,6 +89,41 @@ namespace RexliteWebAppEnt1._0
         public static string Right(this string str, int len, int skiplen)
         {
             return str.Substring(str.Length - len - skiplen, len);
+        }
+
+
+        public static double FahrenheitToCelsius(double tempIn)
+        {
+            Double fCels = (tempIn - 32) * (5 / 9);
+
+            return fCels;
+        }
+
+        public static double CelsiusToFahenreit(double tempIn)
+        {
+            double dFahr = (1.8) * (tempIn + 32);
+
+            return dFahr;
+        }
+
+        public static bool CheckJsonFile(string jsonFile)
+        {
+            string BleJsonListFilePath = HttpContext.Current.Server.MapPath("~/App_Data/");
+            string fullFileName = BleJsonListFilePath + jsonFile;
+            if (File.Exists(fullFileName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static string[] SplitWhitespace(string input)
+        {
+            char[] whitespace = new char[] { ' ', '\t' };
+            return input.Split(whitespace);
         }
 
     }
