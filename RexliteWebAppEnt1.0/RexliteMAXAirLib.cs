@@ -137,14 +137,14 @@ namespace RexliteWebAppEnt1._0
                 //using (System.IO.StreamWriter outfile = new System.IO.StreamWriter(@"C:\yourDirectory\yourFile.txt"))
                 //{
                 //    outfile.Write(yourFileAsString);
-                //}
-                fileSaved = true;
+                //}             
+                fileSaved = ExtensionMethods.CheckJsonFile(getSaveFileName);
             }
             else
             {
                 //Response.Write(BleJsonFileName + " 檔案不存在");
                 File.WriteAllText(FileToBeSaved, jsonFile, Encoding.UTF8);
-                fileSaved = true;
+                fileSaved = ExtensionMethods.CheckJsonFile(getSaveFileName);
             }
 
             return fileSaved;

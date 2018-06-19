@@ -23,6 +23,9 @@ namespace RexliteWebAppEnt1._0
             if (ExtensionMethods.CheckJsonFile(ExtensionMethods.CoolMasterIfconfigFile))
             {
                 CoolMasterIfconfigFileExists = true;
+
+
+
             }
             else
             {  
@@ -31,7 +34,6 @@ namespace RexliteWebAppEnt1._0
                 string initCoolMasterIfconfigJson = rexliteAirLib.ConvertCoolMasterIfconfigRetrievelToJson(createCoolMasterIfconfigCmdList);
                 //bool getFileSavedStatus = rexliteAirLib.FormatAndSaveAirDeviceJsonFile(initCoolMasterIfconfigJson, "{\"CoolMasterIfconfig\":[", "CoolMasterIfconfig");
                 CoolMasterIfconfigFileExists = rexliteAirLib.FormatAndSaveAirDeviceJsonFile(initCoolMasterIfconfigJson, ExtensionMethods.CoolMasterIfconfigJsonHeader, ExtensionMethods.CoolMasterFile);
-
             }
 
             //if (ExtensionMethods.CheckJsonFile(ExtensionMethods.MAXAirDeviceJsonList))
