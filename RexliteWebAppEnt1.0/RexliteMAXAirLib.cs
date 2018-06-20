@@ -117,13 +117,13 @@ namespace RexliteWebAppEnt1._0
             switch (fileNameToBeSaved)
             {
                 case "BleDeviceJsonList":
-                    getSaveFileName = ExtensionMethods.BleDeviceJsonList;                 //連線哪台設備
+                    getSaveFileName = ExtensionMethods.BleDeviceJsonList;                 
                     break;
                 case "MAXAirDeviceJsonList":
-                    getSaveFileName = ExtensionMethods.MAXAirDeviceJsonList;                //開通並讀取設備狀態資料
+                    getSaveFileName = ExtensionMethods.MAXAirDeviceJsonList;               
                     break;
                 case "CoolMasterIfconfig":
-                    getSaveFileName = ExtensionMethods.CoolMasterIfconfigFile;                 //閃爍面板
+                    getSaveFileName = ExtensionMethods.CoolMasterIfconfigFile;         
                     break;
             }
 

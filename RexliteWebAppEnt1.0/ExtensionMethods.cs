@@ -16,7 +16,7 @@ namespace RexliteWebAppEnt1._0
         public const string CoolMasterIfconfigFile = "CoolMasterIfconfig.json";
 
         public const string BleDeviceListJsonHeader = "{\"BleDeviceList\":[";
-        public const string MAXAirDeviceJsonHeader = "{\"MAXAirDevice\":[";
+        public const string MAXAirDeviceJsonHeader = "{\"MAXAirDeviceList\":[";
         public const string CoolMasterIfconfigJsonHeader = "{\"CoolMasterIfconfig\":[";
 
         public const string BleDeviceListFile = "BleDeviceJsonList";

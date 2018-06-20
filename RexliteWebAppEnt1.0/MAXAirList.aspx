@@ -6,6 +6,7 @@
     <title>Rexlite MAXAir Device List</title>
     <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="Scripts/RexliteFunctions.js"></script>
+    <script type="text/javascript" src="css/jquery-ui-1.12.1/jquery-ui.min.js"></script>
     <link href="css/rexMain.css" rel="stylesheet" type="text/css"  />
     <style>
 		html {
@@ -80,7 +81,7 @@
 		            </div>
                 </div>
 	        </div>
-            <asp:HiddenField ID="hidMAXAirBleJsonList" runat="server" />
+            <asp:HiddenField ID="hidMAXAirDeviceJsonList" runat="server" />
             <div id="MAXAirbottomDiv" class="bottomDiv">
 			    <img src="images/APP_Button_REXLiTE.png" width="280" height="12" />
 	        </div>
@@ -89,11 +90,11 @@
     <script type="text/javascript">
     $(document).ready(function () {
         var j = 0;
-        var jstr = $('input#hidMAXAirBleJsonList').val();
+        var jstr = $('input#hidMAXAirDeviceJsonList').val();
         console.log("MAXAir jstr =" + jstr);
 
         var getTopSearchBtn = document.getElementById("MAXAirTopSearchBtn");
-			
+	
 		// Add click event handler
         getTopSearchBtn.addEventListener("click", function (event) {
             event.preventDefault(); 
@@ -102,36 +103,74 @@
 
         if (checkIsEmpty(jstr))  //only do the following events if json is not empty
         {
-            console.log("jstr has value!");
-            var blelist = JSON.parse(jstr);
-
-            for (var i = 0; i < blelist.length; ++i) {	
-                var bleId = blelist[i].ID;
-
-                if (bleId == "13")
-                {
-                    console.log("j createSubDiv pre1 =" + j);
-                    createSubDiv(j, "MAXAir");
-                    j++;
-                }
+			console.log("jstr has value!");
+		    var deviceList = JSON.parse(jstr);
+		    var deviceName = "MAXAir";
+			
+		    for (var i = 0; i < deviceList.MAXAirDeviceList.length; ++i) {	
+                var deviceId = deviceList.MAXAirDeviceList[i].ID;
+				
+				createSubDiv(i, deviceName);
             }
+			
+			for (var i = 0; i < deviceList.MAXAirDeviceList.length; ++i) {	
+				var deviceId = deviceList.MAXAirDeviceList[i].ID;
+				createMAXAirButton(i, deviceId, deviceName);
+			}
+		}
 
-            j = 0;  //reset j value
-            for(var i = 0; i <blelist.length; ++i) {
-		        var bleId = blelist[i].ID;
-		        var sn = blelist[i].SN;
-                var bleName = blelist[i].BLEName;
-    
-                if (bleId == "13")
-                {
-                    j++;
-                    console.log("find i =" + i + ", sn=" + sn + ", bleName=" + bleName);
-                    console.log("find j =" + j + ", bleId=" + bleId);
+        function createMAXAirButton(i, bleId, deviceName) {
+            var getDiv = document.getElementById("MAXAirDeviceList");
+            var btn = document.createElement("BUTTON");
+            var btnRenameEditor = document.createElement("BUTTON");
+            var btnSearch = document.createElement("BUTTON");
+            console.log("here is create maxair buttons ");
 
-                    createButton(j, bleId, sn, bleName, "MAXAir");
-                }		        
-	        }
-        }  // ending the check jstr event
+            var subDivId = deviceName + "Div" + (i + 1);
+            console.log("createMAbtn subDiv.id =" + subDivId);
+            var getSubDiv = document.getElementById(subDivId);
+
+            btn.id = deviceName + "btn_" + i;
+            //btn.innerHTML = "btn_" + i;
+            //alert(btn.id);
+            var indx = i + 1;
+
+            btn.innerHTML = "<span style='font-size:20px;font-weight: bold;'>" + deviceName + "&nbsp&nbsp&nbsp&nbsp&nbsp" + indx + "</span><br /> ID: " + bleId + "<br />";
+            btn.style.height = "38px";
+            btn.style.width = "60%";
+            btn.className = "boxSt";
+            $(btn).attr('data-MAXAirID', bleId);
+
+            btnRenameEditor.id = "bleEditBtn_" + i;
+            btnRenameEditor.style.height = "60px";
+            btnRenameEditor.style.width = "20%";
+            btnRenameEditor.className = "btnRenameEdit";
+
+            btnSearch.id = "bleSearchBtn_" + i;
+            btnSearch.style.height = "60px";
+            btnSearch.style.width = "20%";
+            btnSearch.className = "btnSearch";
+
+            // 3. Add event handler
+            btn.addEventListener("click", function () {
+                alert(btn.id);
+                //var a = $("blebtn_0").data('bleidsn'); //getter
+            });
+
+            // 4. Add event handler
+            btnRenameEditor.addEventListener("click", function () {
+                alert(btnRenameEditor.id);
+            });
+
+            // 4. Add event handler
+            btnSearch.addEventListener("click", function () {
+                alert(btnSearch.id);
+            });
+
+            getSubDiv.appendChild(btn);
+            getSubDiv.appendChild(btnRenameEditor);
+            getSubDiv.appendChild(btnSearch);
+        }
 
 
 
