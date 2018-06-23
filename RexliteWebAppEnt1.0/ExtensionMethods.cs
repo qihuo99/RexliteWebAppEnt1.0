@@ -14,10 +14,19 @@ namespace RexliteWebAppEnt1._0
         public const string BleDeviceJsonList = "BleDeviceList.json";
         public const string MAXAirDeviceJsonList = "MAXAirDeviceList.json";
         public const string CoolMasterIfconfigFile = "CoolMasterIfconfig.json";
+        public const string MAXLite1UpdateFile = "MAXLite1Update.json";
+        public const string MAXLite2UpdateFile = "MAXLite2Update.json";
+        public const string MAXLite3UpdateFile = "MAXLite3Update.json";
+
+
 
         public const string BleDeviceListJsonHeader = "{\"BleDeviceList\":[";
         public const string MAXAirDeviceJsonHeader = "{\"MAXAirDeviceList\":[";
         public const string CoolMasterIfconfigJsonHeader = "{\"CoolMasterIfconfig\":[";
+
+        public const string MAXLite1UpdateJsonHeader = "{\"MAXLite1Update\":[";
+        public const string MAXLite2UpdateJsonHeader = "{\"MAXLite2Update\":[";
+        public const string MAXLite3UpdateJsonHeader = "{\"MAXLite3Update\":[";
 
         public const string BleDeviceListFile = "BleDeviceJsonList";
         public const string MAXAirDeviceFile = "MAXAirDeviceJsonList";
@@ -26,6 +35,7 @@ namespace RexliteWebAppEnt1._0
         public const int PortNumber = 4000;
         public const string searchMaxAirDeviceCmd = "ls";
         public const string getCoolMasterDHCPCmd = "ifconfig";
+        public const string getCoolMasterStatusCmd = "stat";
         public const int CoolMasterPortNumber = 10102;
 
         //16進位數字組成的字串轉換為Byte[]
@@ -126,5 +136,12 @@ namespace RexliteWebAppEnt1._0
             return input.Split(whitespace);
         }
 
+
+        public static string ReplaceAtIndex(int i, char value, string word)
+        {
+            char[] letters = word.ToCharArray();
+            letters[i] = value;
+            return string.Join("", letters);
+        }
     }
 }

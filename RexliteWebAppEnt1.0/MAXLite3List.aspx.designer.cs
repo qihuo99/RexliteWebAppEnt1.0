@@ -29,5 +29,32 @@ namespace RexliteWebAppEnt1._0 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidMAXLite3BleJsonList;
+        
+        /// <summary>
+        /// hidRenameDeviceIDSNSelected control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hidRenameDeviceIDSNSelected;
+        
+        /// <summary>
+        /// hidNewDeviceRename control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hidNewDeviceRename;
+        
+        /// <summary>
+        /// hidRenameDeviceJson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hidRenameDeviceJson;
     }
 }

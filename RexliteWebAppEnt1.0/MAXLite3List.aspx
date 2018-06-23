@@ -80,12 +80,15 @@
 		            </div>
                 </div>
 	        </div>
-            <asp:HiddenField ID="hidMAXLite3BleJsonList" runat="server" />
             <div id="MAXLite3bottomDiv" class="bottomDiv">
 			    <img src="images/APP_Button_REXLiTE.png" width="280" height="12" />
 	        </div>
+            <asp:HiddenField ID="hidMAXLite3BleJsonList" runat="server" />
+            <asp:HiddenField ID="hidRenameDeviceIDSNSelected" runat="server" />
+            <asp:HiddenField ID="hidNewDeviceRename" runat="server" />
+            <asp:HiddenField ID="hidRenameDeviceJson" runat="server" />
         </div>
-    </form>
+     </form>
     <script type="text/javascript">
     $(document).ready(function () {
         var j = 0;
@@ -182,6 +185,28 @@
             btnRenameEditor.addEventListener("click", function (event) {
                 event.preventDefault();
                 alert(btnRenameEditor.id);
+                //console.log("99 data-bleidsn = " + $('#btnMAXLite3_1').data("bleidsn"));
+
+                var getCurrBleID = $('#btnMAXLite3_1').data("bleid");
+                var getCurrSN = $('#btnMAXLite3_1').data("blesn");
+                var getCurrIDSN = $('#btnMAXLite3_1').data("bleidsn");
+                console.log("99 getCurrID = " + getCurrBleID);
+                console.log("99 getCurrSN = " + getCurrSN);
+                console.log("99 getCurrIDSN = " + getCurrIDSN);
+
+                $('#hidRenameDeviceIDSNSelected').val(getCurrIDSN);
+                $('#hidNewDeviceRename').val('New Air Conditioner ' + getCurrIDSN);
+                console.log("hidNewDeviceRename =" + $("#hidNewDeviceRename").val());
+                console.log("hidRenameDeviceIDSNSelected =" + $("#hidRenameDeviceIDSNSelected").val());
+
+                var formjson = '{"bleID": "' + getCurrBleID  + '", "DeviceSN": "' + getCurrSN +
+                         '", "DeviceIDSN": "' + $("#hidRenameDeviceIDSNSelected").val() +
+                         '", "NewDeviceName": "' + $("#hidNewDeviceRename").val() + '" }';
+                                               
+	            console.log(formjson);  //'{"DeviceID": "' + $("#hidRenameDeviceIDSNSelected").val()
+                
+                $('#hidRenameDeviceJson').val(formjson);
+                console.log("109 hidRenameDeviceJson = " + $('#hidRenameDeviceJson').val());
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 

@@ -25,5 +25,32 @@ namespace RexliteWebAppEnt1._0
         {
 
         }
+
+
+        [System.Web.Services.WebMethod]
+        public static string GetCurrentTime(string name)
+        {
+            return "Hello " + name + Environment.NewLine + "The Current Time is: "
+                + DateTime.Now.ToString();
+        }
+
+
+
+        [System.Web.Services.WebMethod]
+        public static bool SaveMAXLite3UpdateJsonFile(string maxlite3json)
+        {
+            var json = maxlite3json;
+            //var getMaxlite3json = hidRenameDeviceJson.Value;
+            //hidRenameDeviceJson.Value;
+            //bool getSt = RexliteLib.
+            //bool getSt = rexliteLib.FormatAndSaveJsonFile(maxlite3json, ExtensionMethods.MAXLite3UpdateJsonHeader, ExtensionMethods.MAXLite3UpdateFile);
+
+
+            //return "Hello " + name + Environment.NewLine + "The Current Time is: "
+            //    + DateTime.Now.ToString();
+            return true;
+        }
+
+
     }
 }

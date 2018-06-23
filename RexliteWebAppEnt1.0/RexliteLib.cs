@@ -179,6 +179,48 @@ namespace RexliteWebAppEnt1._0
             return result;
         }
 
+
+        public bool FormatAndSaveJsonFile(string listJson, string fileheader, string fileNameToBeSaved)
+        {
+            bool fileSaved = false;
+            //string jsonFile = "{\"MAXAirDevice\":[" + listJson;
+            string jsonFile = fileheader + listJson;
+            jsonFile = jsonFile + "]}";
+
+            //This will locate the Example.xml file in the App_Data folder.. (App_Data is a good place to put data files.)
+            string BleJsonListFilePath = HttpContext.Current.Server.MapPath("~/App_Data/");
+            string getSaveFileName = string.Empty;
+
+            switch (fileNameToBeSaved)
+            {
+                case "MAXLite1Update":
+                    getSaveFileName = ExtensionMethods.MAXLite1UpdateFile;
+                    break;
+                case "MAXLite2Update":
+                    getSaveFileName = ExtensionMethods.MAXLite2UpdateFile;
+                    break;
+                case "MAXLite3Update":
+                    getSaveFileName = ExtensionMethods.MAXLite3UpdateFile;
+                    break;
+            }
+
+            string FileToBeSaved = BleJsonListFilePath + getSaveFileName;
+            if (File.Exists(FileToBeSaved))
+            {
+                File.Delete(@FileToBeSaved);  //Response.Write(AirBleFile + " 檔案存在");
+                File.WriteAllText(FileToBeSaved, jsonFile, Encoding.UTF8);          
+                fileSaved = ExtensionMethods.CheckJsonFile(getSaveFileName);
+            }
+            else
+            {
+                //Response.Write(BleJsonFileName + " 檔案不存在");
+                File.WriteAllText(FileToBeSaved, jsonFile, Encoding.UTF8);
+                fileSaved = ExtensionMethods.CheckJsonFile(getSaveFileName);
+            }
+
+            return fileSaved;
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////
         //This function will convert a string array to Json array
         //////////////////////////////////////////////////////////////////////////////////////

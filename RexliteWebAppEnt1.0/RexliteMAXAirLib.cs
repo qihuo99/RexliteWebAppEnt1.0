@@ -103,6 +103,16 @@ namespace RexliteWebAppEnt1._0
             return result;
         }
 
+        public string FormaJsonFile(string listJson, string deviceID)
+        {
+            string result = string.Empty;
+
+            string MAXAirDeviceJsonHeader = "{\"MAXAirDevice\":[";
+
+            
+
+            return result;
+        }
         public bool FormatAndSaveAirDeviceJsonFile(string listJson, string fileheader, string fileNameToBeSaved)
         {
             bool fileSaved = false;
@@ -155,7 +165,7 @@ namespace RexliteWebAppEnt1._0
         //////////////////////////////////////////////////////////////////////////////////////
         public string ConvertMAXAirSearchStringToJson(string[] list)
         {
-            string result = "";
+            string result = string.Empty;
             StringBuilder sbAir = new StringBuilder();
             int i = 0;
 
@@ -178,8 +188,12 @@ namespace RexliteWebAppEnt1._0
                         string channel = splitted[0];
                         string id = splitted[1];
                         string powerSt = devListInfo[1];
-                        string presetTemperature = devListInfo[2];
-                        string indoorTemperature = devListInfo[3];
+                        //string presetTemperature = devListInfo[2];
+                        string presetTempScale = devListInfo[2][devListInfo[2].Length - 1].ToString();
+                        string presetTempDegree = devListInfo[2].Remove(devListInfo[2].Length - 1); ;
+                        string indoorTempScale = devListInfo[3][devListInfo[3].Length - 1].ToString();
+                        string indoorTempDegree = devListInfo[3].Remove(devListInfo[3].Length - 1); ;
+                        //string indoorTemperature = devListInfo[3];
                         string fanSpeed = devListInfo[4];
                         string selection = devListInfo[5];
 
@@ -188,8 +202,10 @@ namespace RexliteWebAppEnt1._0
                             Channel = channel,
                             ID = id,
                             PowerStatus = powerSt,
-                            PresetTemperature = presetTemperature,
-                            IndoorTemperature = indoorTemperature,
+                            PresetTempDegree = presetTempDegree,
+                            PresetTempScale = presetTempScale,
+                            IndoorTempDegree = indoorTempDegree,
+                            IndoorTempScale = indoorTempScale,
                             FanSpeed = fanSpeed,
                             Selection = selection
                         };
@@ -207,6 +223,111 @@ namespace RexliteWebAppEnt1._0
                 result = "Error..... " + ex.StackTrace;
             }
             return result;
+        }
+
+        public string ConvertMAXAirStatusByIDStringToJson(string[] list)
+        {
+            string result = "";
+            StringBuilder sbAir = new StringBuilder();
+            int i = 0;
+
+            try
+            {
+                for (i = 0; i < list.Length; i++)
+                {
+                    if (list[i].ToUpper() == "OK")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        string[] ListInfo = ExtensionMethods.SplitWhitespace(list[i]);
+
+                        //use linq to remove empty array elements
+                        ListInfo = ListInfo.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                        string id = ListInfo[0];
+                        string powerSt = ListInfo[1];
+                        var getLastChar1 = ListInfo[2].ToString();
+                        //char lastChar1 = ListInfo[2][ListInfo[2].Length - 1];
+                        string presetTempScale = ListInfo[2][ListInfo[2].Length - 1].ToString();
+                        string presetTempDegree = ListInfo[2].Remove(ListInfo[2].Length - 1); ;
+                        int pos = ListInfo[3].IndexOf(",");
+                        string indoorTempDegree = RoundUpDegree(pos, ListInfo[3]);
+                        //char lastChar2 = ListInfo[3][ListInfo[3].Length - 1];
+                        string indoorTempScale = ListInfo[3][ListInfo[3].Length - 1].ToString();
+                        string fanSpeed = ListInfo[4];
+                        string selection = ListInfo[5];
+
+                        var AirDevice = new
+                        {
+                            ID = id,
+                            PowerStatus = powerSt,
+                            PresetTempDegree = presetTempDegree,
+                            PresetTempScale = presetTempScale,
+                            IndoorTempDegree = indoorTempDegree,
+                            IndoorTempScale = indoorTempScale,
+                            FanSpeed = fanSpeed,
+                            Selection = selection
+                        };
+
+                        var json = JsonConvert.SerializeObject(AirDevice);
+                        sbAir.Append("[" + json + "]");
+                    }
+                }
+                //string res = sbAir.ToString().TrimEnd(',');
+                result = sbAir.ToString().Trim();
+            }
+            catch (Exception ex)
+            {
+                result = "Error..... " + ex.StackTrace;
+            }
+            return result;
+        }
+
+        public string DetermineTemperatureScale(char temp)
+        {
+            string result = string.Empty;
+
+            switch (temp)
+            {
+                case 'C':
+                    result = "Celsius";
+                    break;
+                case 'F':
+                    result = "Fahrenheit";
+                    break;
+            }
+
+            return result;
+        }
+
+        public string RoundUpDegree(int pos, string str)
+        {
+            string result = string.Empty;
+            string getDegree = string.Empty;
+            int pos1 = str.IndexOf(",");
+            if (pos1 > 0)
+            {
+                string getVal = ExtensionMethods.ReplaceAtIndex(pos1, '.', str);
+                int pos2 = getVal.IndexOf("C");
+                if (pos2 > 0)
+                {
+                    getDegree = getVal.Remove(pos2, 1);  // Ex: _str_helloworld.Remove(startindex,lenght)
+                }
+                else {
+                    int pos3 = getVal.IndexOf("F");
+                    if (pos3 > 0)
+                    {
+                        getDegree = getVal.Remove(pos2, 1);  // Ex: _str_helloworld.Remove(startindex,lenght)
+                    }
+                }  
+            }
+
+            Double converted = Convert.ToDouble(getDegree);
+            Double RoundUP = Math.Round(converted);
+
+            return RoundUP.ToString();
         }
 
         public string[] makeCoolMasterClientCall(string DHCPIPAddr, string Cmd)

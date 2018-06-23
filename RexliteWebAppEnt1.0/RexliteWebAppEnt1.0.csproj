@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\101ReturnedData.txt" />
     <Content Include="css\jquery-ui-1.12.1\AUTHORS.txt" />
     <Content Include="css\jquery-ui-1.12.1\external\jquery\jquery.js" />
     <Content Include="css\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
@@ -89,6 +90,7 @@
     <Content Include="css\jquery-ui-1.12.1\jquery-ui.theme.css" />
     <Content Include="css\jquery-ui-1.12.1\jquery-ui.theme.min.css" />
     <Content Include="css\jquery-ui-1.12.1\LICENSE.txt" />
+    <Content Include="css\jquery-ui-1.8.16.css" />
     <Content Include="css\rexMain.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -125,6 +127,7 @@
     <Content Include="App_Data\blelist.json" />
     <Content Include="App_Data\CoolMasterIfconfig.json" />
     <Content Include="css\jquery-ui-1.12.1\package.json" />
+    <Content Include="App_Data\MAXAirID_101.json" />
     <Content Include="App_Data\MAXAirDeviceList.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\APP_Button_UP-OFF.png" />
@@ -137,6 +140,8 @@
     <Content Include="MAXLite3List.aspx" />
     <Content Include="MAXSceneKeysPanel.aspx" />
     <Content Include="MAXSceneList.aspx" />
+    <Content Include="Scripts\jquery-1.6.min.js" />
+    <Content Include="Scripts\jquery-1.8.ui.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />

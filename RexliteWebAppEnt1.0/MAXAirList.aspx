@@ -130,7 +130,7 @@
             console.log("createMAbtn subDiv.id =" + subDivId);
             var getSubDiv = document.getElementById(subDivId);
 
-            btn.id = deviceName + "btn_" + i;
+            btn.id = deviceName + "btn_" + (i + 1);
             //btn.innerHTML = "btn_" + i;
             //alert(btn.id);
             var indx = i + 1;
@@ -171,8 +171,6 @@
             getSubDiv.appendChild(btnRenameEditor);
             getSubDiv.appendChild(btnSearch);
         }
-
-
 
 
     });
