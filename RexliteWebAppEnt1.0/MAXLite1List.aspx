@@ -181,6 +181,8 @@
             btnRenameEditor.addEventListener("click", function (event) {
                 event.preventDefault();
                 alert(btnRenameEditor.id);
+                showMsg();
+
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 
@@ -195,7 +197,9 @@
             getSubDiv.appendChild(btnSearch);
         }
 
-
+        function showMsg() {
+            alert("showMsg function!");
+        }
     });
     </script>
 </body>

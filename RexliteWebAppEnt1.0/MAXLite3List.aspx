@@ -186,7 +186,7 @@
                 event.preventDefault();
                 alert(btnRenameEditor.id);
                 //console.log("99 data-bleidsn = " + $('#btnMAXLite3_1').data("bleidsn"));
-
+                
                 var getCurrBleID = $('#btnMAXLite3_1').data("bleid");
                 var getCurrSN = $('#btnMAXLite3_1').data("blesn");
                 var getCurrIDSN = $('#btnMAXLite3_1').data("bleidsn");
@@ -207,6 +207,8 @@
                 
                 $('#hidRenameDeviceJson').val(formjson);
                 console.log("109 hidRenameDeviceJson = " + $('#hidRenameDeviceJson').val());
+
+                showMsg(formjson);
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 
@@ -219,6 +221,10 @@
             getSubDiv.appendChild(btn);
             getSubDiv.appendChild(btnRenameEditor);
             getSubDiv.appendChild(btnSearch);
+        }
+
+        function showMsg(str) {
+            alert("showMsg function! =" + str);
         }
 
     });
