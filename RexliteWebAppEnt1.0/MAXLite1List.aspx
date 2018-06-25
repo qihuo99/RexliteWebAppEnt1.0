@@ -55,9 +55,24 @@
         padding: 0;
     }
 	</style>
+    <script type = "text/javascript">
+        function ShowCurrentTime() {
+            PageMethods.GetCurrentTime(document.getElementById("<%=txtUserName.ClientID%>").value, OnSuccess);
+        }
+        function OnSuccess(response, userContext, methodName) {
+            alert(response);
+        }
+
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods = "true"></asp:ScriptManager>
+        <div>
+        Your Name : 
+        <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
+        <input id="btnGetTime" type="button" value="Show Current Time" onclick = "ShowCurrentTime()" />
+        </div>
         <div>
              <div class="div.horizontal divlist"  style="width:100%;">
 		        <div id="MAXLite1Top" class="ListPageTopDiv">
@@ -182,7 +197,8 @@
                 event.preventDefault();
                 alert(btnRenameEditor.id);
                 showMsg();
-
+                //ShowCurrentTime();
+                //getJson("click maxlite1updatejson btnRenameEditor");
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 
@@ -202,5 +218,6 @@
         }
     });
     </script>
+    
 </body>
 </html>

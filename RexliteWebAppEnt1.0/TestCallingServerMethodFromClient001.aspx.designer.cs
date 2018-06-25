@@ -10,7 +10,7 @@
 namespace RexliteWebAppEnt1._0 {
     
     
-    public partial class MAXLite1 {
+    public partial class TestCallingServerMethodFromClient001 {
         
         /// <summary>
         /// form1 control.
@@ -38,14 +38,5 @@ namespace RexliteWebAppEnt1._0 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtUserName;
-        
-        /// <summary>
-        /// hidMAXLite1BleJsonList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hidMAXLite1BleJsonList;
     }
 }

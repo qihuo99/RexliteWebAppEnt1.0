@@ -179,7 +179,6 @@ namespace RexliteWebAppEnt1._0
             return result;
         }
 
-
         public bool FormatAndSaveJsonFile(string listJson, string fileheader, string fileNameToBeSaved)
         {
             bool fileSaved = false;

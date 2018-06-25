@@ -147,6 +147,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\RexliteFunctions.js" />
+    <Content Include="TestCallingServerMethodFromClient001.aspx" />
     <Content Include="TestJSCallWebMethods.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -221,6 +222,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RexliteLib.cs" />
     <Compile Include="RexliteMAXAirLib.cs" />
+    <Compile Include="TestCallingServerMethodFromClient001.aspx.cs">
+      <DependentUpon>TestCallingServerMethodFromClient001.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestCallingServerMethodFromClient001.aspx.designer.cs">
+      <DependentUpon>TestCallingServerMethodFromClient001.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TestJSCallWebMethods.aspx.cs">
       <DependentUpon>TestJSCallWebMethods.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
