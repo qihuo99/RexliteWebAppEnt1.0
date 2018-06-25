@@ -35,14 +35,22 @@ namespace RexliteWebAppEnt1._0
                 + DateTime.Now.ToString();
         }
 
-
+        //webmethod must be static otherwise it will cause error in client side calling
         [System.Web.Services.WebMethod]
         public static string SaveMAXLite1UpdateJsonFile(string maxlite1json)
         {
-            var json = maxlite1json;
+            RexliteLib rexliteMAXLite1Lib = new RexliteLib();
+            var json = string.Empty;
+            try
+            {
+                bool fileSt = rexliteMAXLite1Lib.FormatAndSaveJsonFile(maxlite1json, ExtensionMethods.MAXLite1UpdateJsonHeader, ExtensionMethods.MAXLite1UpdateCmd);
 
-
-            return maxlite1json + " -- MAXLite1Update File is saved!!!  ";
+                return maxlite1json + " -- MAXLite1Update File is saved!!!  ";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
 

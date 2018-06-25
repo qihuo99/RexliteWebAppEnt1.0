@@ -179,7 +179,7 @@ namespace RexliteWebAppEnt1._0
             return result;
         }
 
-        public bool FormatAndSaveJsonFile(string listJson, string fileheader, string fileNameToBeSaved)
+        public bool FormatAndSaveJsonFile(string listJson, string fileheader, string fileNameSavedCmd)
         {
             bool fileSaved = false;
             //string jsonFile = "{\"MAXAirDevice\":[" + listJson;
@@ -190,7 +190,7 @@ namespace RexliteWebAppEnt1._0
             string BleJsonListFilePath = HttpContext.Current.Server.MapPath("~/App_Data/");
             string getSaveFileName = string.Empty;
 
-            switch (fileNameToBeSaved)
+            switch (fileNameSavedCmd)
             {
                 case "MAXLite1Update":
                     getSaveFileName = ExtensionMethods.MAXLite1UpdateFile;

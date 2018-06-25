@@ -129,6 +129,7 @@
     <Content Include="css\jquery-ui-1.12.1\package.json" />
     <Content Include="App_Data\MAXAirID_101.json" />
     <Content Include="App_Data\MAXAirDeviceList.json" />
+    <Content Include="App_Data\MAXLite1Update.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\APP_Button_UP-OFF.png" />
     <Content Include="images\APP_Button_UP-ON.png" />

@@ -55,15 +55,7 @@
         padding: 0;
     }
 	</style>
-    <script type = "text/javascript">
-        function ShowCurrentTime() {
-            PageMethods.GetCurrentTime(document.getElementById("<%=txtUserName.ClientID%>").value, OnSuccess);
-        }
-        function OnSuccess(response, userContext, methodName) {
-            alert(response);
-        }
 
-    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -96,6 +88,7 @@
                 </div>
 	        </div>
             <asp:HiddenField ID="hidMAXLite1BleJsonList" runat="server" />
+            <asp:HiddenField ID="hidMAXLite1DeviceRenameJson" runat="server" />
             <div id="MAXLite1bottomDiv" class="bottomDiv">
 			    <img src="images/APP_Button_REXLiTE.png" width="280" height="12" />
 	        </div>
@@ -195,10 +188,31 @@
             // 4. Add event handler
             btnRenameEditor.addEventListener("click", function (event) {
                 event.preventDefault();
-                alert(btnRenameEditor.id);
-                showMsg();
+                alert("Current btnRenameEditor selected is =" +btnRenameEditor.id);
+                alert("Current blebtn selected is =" + btnid);
+                var currBleID = "#" + btnid;
+                console.log("99 currBleIDName = " + currBleID);
+                var getCurrBleID = $(currBleID).data("bleid");
+                var getCurrSN = $(currBleID).data("blesn");
+                var getCurrIDSN = $(currBleID).data("bleidsn");
+                var getNewDeviceName = "MAXLite1--" + getCurrIDSN;
+                console.log("99 getCurrID = " + getCurrBleID);
+                console.log("99 getCurrSN = " + getCurrSN);
+                console.log("99 getCurrIDSN = " + getCurrIDSN);
+
+                var formjson = '{"MAXLite1BleID": "' + getCurrBleID  + '", "MAXLite1DeviceSN": "' + getCurrSN +
+                         '", "MAXLite1DeviceIDSN": "' + getCurrIDSN +
+                         '", "NewMAXLite1DeviceName": "' + getNewDeviceName + '" }';
+
+                console.log(formjson);  //'{"DeviceID": "' + $("#hidRenameDeviceIDSNSelected").val()
+                
+                $('#hidMAXLite1DeviceRenameJson').val(formjson);
+
+                processMaxlite1UpdateJson(formjson);
+                //showMsg();
                 //ShowCurrentTime();
-                //getJson("click maxlite1updatejson btnRenameEditor");
+                //processMaxlite1UpdateJson("maxlite1updatejson btnRenameEditor clicked!!! = ");
+
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 
@@ -218,6 +232,26 @@
         }
     });
     </script>
-    
+    <script type = "text/javascript">
+          function processMaxlite1UpdateJson2(maxlite1updatejson) {
+             alert("processMaxlite1UpdateJson2 here!!!");
+        }
+
+        function ShowCurrentTime() {
+            PageMethods.GetCurrentTime(document.getElementById("<%=txtUserName.ClientID%>").value, OnSuccess);
+        }
+        function OnSuccess(response, userContext, methodName) {
+            alert(response);
+        }
+
+
+        function processMaxlite1UpdateJson(maxlite1updatejson) {
+            PageMethods.SaveMAXLite1UpdateJsonFile(maxlite1updatejson, OnMAXLite1UpdateSuccess);
+        }
+        function OnMAXLite1UpdateSuccess(response, userContext, methodName) {
+            alert(response);
+        }
+
+    </script>
 </body>
 </html>

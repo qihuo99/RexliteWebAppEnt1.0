@@ -31,6 +31,9 @@ namespace RexliteWebAppEnt1._0
         public const string BleDeviceListFile = "BleDeviceJsonList";
         public const string MAXAirDeviceFile = "MAXAirDeviceJsonList";
         public const string CoolMasterFile = "CoolMasterIfconfig";
+        public const string MAXLite1UpdateCmd = "MAXLite1Update";
+        public const string MAXLite2UpdateCmd = "MAXLite2Update";
+        public const string MAXLite3UpdateCmd = "MAXLite3Update";
 
         public const int PortNumber = 4000;
         public const string searchMaxAirDeviceCmd = "ls";
