@@ -43,7 +43,7 @@ namespace RexliteWebAppEnt1._0
             var json = string.Empty;
             try
             {
-                bool fileSt = rexliteMAXLite1Lib.FormatAndSaveJsonFile(maxlite1json, ExtensionMethods.MAXLite1UpdateJsonHeader, ExtensionMethods.MAXLite1UpdateCmd);
+                bool fileSt = rexliteMAXLite1Lib.FormatAndSaveJsonFile(maxlite1json, ExtensionMethods.MAXLite1UpdateJsonHeader, ExtensionMethods.MAXLite1UpdateCmd, "create");
 
                 return maxlite1json + " -- MAXLite1Update File is saved!!!  ";
             }

@@ -103,16 +103,6 @@ namespace RexliteWebAppEnt1._0
             return result;
         }
 
-        public string FormaJsonFile(string listJson, string deviceID)
-        {
-            string result = string.Empty;
-
-            string MAXAirDeviceJsonHeader = "{\"MAXAirDevice\":[";
-
-            
-
-            return result;
-        }
         public bool FormatAndSaveAirDeviceJsonFile(string listJson, string fileheader, string fileNameToBeSaved)
         {
             bool fileSaved = false;

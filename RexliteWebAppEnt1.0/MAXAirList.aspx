@@ -152,8 +152,13 @@
             btnSearch.className = "btnSearch";
 
             // 3. Add event handler
-            btn.addEventListener("click", function () {
-                alert(btn.id);
+            btn.addEventListener("click", function (event) {
+                event.preventDefault();
+                alert("btn.id =" + btn.id);
+                alert("bleId =" + bleId );
+                //var url = "MAXAirKeysPanel.aspx?MAXAirSelectedId=" + bleId;
+               // $(location).attr("href", url);
+                window.location.href = "MAXAirKeysPanel.aspx?MAXAirSelectedId=" + bleId;
                 //var a = $("blebtn_0").data('bleidsn'); //getter
             });
 
