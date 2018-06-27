@@ -105,10 +105,13 @@
 				console.log("fanSpeed =" + fanSpeed);
 				console.log("selection =" + selection);
             }
-
+            setupMAXAirStatusInfoDisplay();
         }
 
         function setupMAXAirStatusInfoDisplay() {
+            var getMAXAirSelectedId = getQueryStringParameterByName('MAXAirSelectedId'); // "lorem"
+            console.log("getMAXAirSelectedId= " + getMAXAirSelectedId);
+            $("#MAXAirDeviceID").text("ID: " + getMAXAirSelectedId);
 			CurrentTempDisplay();
 		    PresetTempDisplay();
 			
@@ -121,8 +124,19 @@
 			{
 				turnOffAllButtons(); 
 			}
-			
-		}
+        }
+
+        
+        function getQueryStringParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
 
         function getSelection(condition) {
 		    var stuff = {
@@ -159,7 +173,14 @@
 				$("#MAXAirFan_Img").attr('src',"images/APP_Button_Fan-OFF.png");
 				$("#MAXAirDehumidifier_Img").attr('src',"images/APP_Button_Dehumidify-ON.png");
 			    return true;
-		    },
+             },
+		    'Auto': function () {
+				$("#MAXAirCooler_Img").attr('src',"images/APP_Button_Cool-ON.png");
+				$("#MAXAirHeater_Img").attr('src',"images/APP_Button_Hot-OFF.png");
+				$("#MAXAirFan_Img").attr('src',"images/APP_Button_Fan-OFF.png");
+				$("#MAXAirDehumidifier_Img").attr('src',"images/APP_Button_Dehumidify-OFF.png");
+			    return true;
+		    }
 		    };
 
 		    if (typeof stuff[condition] !== 'function') {
@@ -195,27 +216,27 @@
 			{
 				$("#MAXAirPresetTemp").text(presetTempDegree);
 			}
-		}
-        		
-		function ConvertFahrenheitToCelcius(tempVal) {
-		    console.log("convert F2C Temp init =" + tempVal);
-			tempVal = parseFloat(tempVal);
-			tempVal = (tempVal-32) / 1.8;
-			console.log("convert F2C  afterConvert before rounding =" + tempVal);
-			tempVal = Math.round(tempVal);
-			console.log("convert F2C  afterConvert after rounding =" + tempVal);
-			return tempVal;
-		}
-		
-		function ConvertCelciusToFahrenheit(tempVal) {
-		    console.log("convert C2F init =" + tempVal);
-			tempVal = parseFloat(tempVal);
-			tempVal = (tempVal*1.8)+32;
-			console.log("convert C2F afterConvert before rounding =" + tempVal);
-			tempVal = Math.round(tempVal);
-			console.log("convert C2F afterConvert after rounding =" + tempVal);
-			return tempVal;
-		}
+		}	
+        
+        function ConvertFahrenheitToCelcius(tempVal) {
+            console.log("convert F2C Temp init =" + tempVal);
+            tempVal = parseFloat(tempVal);
+            tempVal = (tempVal - 32) / 1.8;
+            console.log("convert F2C  afterConvert before rounding =" + tempVal);
+            tempVal = Math.round(tempVal);
+            console.log("convert F2C  afterConvert after rounding =" + tempVal);
+            return tempVal;
+        }
+
+        function ConvertCelciusToFahrenheit(tempVal) {
+            console.log("convert C2F init =" + tempVal);
+            tempVal = parseFloat(tempVal);
+            tempVal = (tempVal * 1.8) + 32;
+            console.log("convert C2F afterConvert before rounding =" + tempVal);
+            tempVal = Math.round(tempVal);
+            console.log("convert C2F afterConvert after rounding =" + tempVal);
+            return tempVal;
+        }
 
         function turnOffAllButtons() 
 		{
@@ -254,28 +275,27 @@
         <div>
             <div id="MAXAirKeyPanelTop" class="ListPageTopDiv">
 			    <div id="MAXAirKeyPaneBackBtn" style="float:left;">
-				    <a href="Default.aspx">
+				    <a href="MAXAirList.aspx">
 					    <img border="0" alt="Back" src="images/APP_Button_Back.png" width="50px" height="40px" />
 				    </a>
 			    </div>
 			    <div id="MAXAirKeyPanelMenuBtn" style="float:right;">
-				    <a href="Default.aspx">
-					    <img border="0" alt="Menu" src="images/APP_Button_Menu.png" width="50px" height="40px" />
-				    </a>
+				    <img border="0" alt="Menu" src="images/APP_Button_Menu.png" width="50px" height="40px" />			   
 			    </div>
 		    </div>
+           
             <div class="horizontal div1" style="border: 1px solid transparent;" >
 		        <div class="vertical"  style="border: 1px solid transparent; margin: 0, auto;">
-                    <div class="subTitleDiv" style="" >
+                    <div class="subTitleDiv" style="font-size: 26px; font-weight: normal;" >
 				        <img id="MAXAirEdit_img" src="images/APP_Button_Rename.png" width="25" height="25"  /> 
-				        &nbsp; &nbsp;客廳空調 &nbsp;&nbsp; 
+				        &nbsp; &nbsp;客廳空調 &nbsp;&nbsp;  <span id="MAXAirDeviceID"><span/>
 				        <br /><br />
 			        </div>
 			        <span class="break"></span>
                     <div class="MAXAirKeyMainContentDiv" style="display: block; margin: 0 auto; " ><!--begin first MAXAirKeyMainContentDiv  -->
      				    <span class="break"></span>
 				        <div class="subTitleDiv" style="margin: 0, auto;" >
-					        <span style="font-size: 18px; ">Current Temperature<span/>
+					        <span style="font-size: 18px;">Current Temperature <span/>
 					        <br /><br />
 				        </div>
 

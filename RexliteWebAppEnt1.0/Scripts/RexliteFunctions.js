@@ -1,6 +1,6 @@
 ﻿
 
-    function checkIsEmpty(value) {
+    function checkIsNotEmpty(value) {
 
         if (typeof (value) !== "undefined" && value) {
             return true;
@@ -93,4 +93,5 @@
         getDiv.appendChild(subDiv);
         getDiv.appendChild(btnHR);
     }
+
 

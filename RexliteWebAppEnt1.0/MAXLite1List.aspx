@@ -65,6 +65,7 @@
         <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
         <input id="btnGetTime" type="button" value="Show Current Time" onclick = "ShowCurrentTime()" />
         </div>
+
         <div>
              <div class="div.horizontal divlist"  style="width:100%;">
 		        <div id="MAXLite1Top" class="ListPageTopDiv">
@@ -89,6 +90,12 @@
 	        </div>
             <asp:HiddenField ID="hidMAXLite1BleJsonList" runat="server" />
             <asp:HiddenField ID="hidMAXLite1DeviceRenameJson" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceID" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceSN" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceIDSN" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceOldName" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceNewName" runat="server" />
+
             <div id="MAXLite1bottomDiv" class="bottomDiv">
 			    <img src="images/APP_Button_REXLiTE.png" width="280" height="12" />
 	        </div>
@@ -108,7 +115,7 @@
             alert("MAXLite1TopSearchBtn clicked!!!");
         });
 
-        if (checkIsEmpty(jstr))  //only do the following events if json is not empty
+        if (checkIsNotEmpty(jstr))  //only do the following events if json is not empty
         {
             console.log("jstr has value!");
             var blelist = JSON.parse(jstr);
@@ -207,8 +214,8 @@
                 console.log(formjson);  //'{"DeviceID": "' + $("#hidRenameDeviceIDSNSelected").val()
                 
                 $('#hidMAXLite1DeviceRenameJson').val(formjson);
-
-                processMaxlite1UpdateJson(formjson);
+                renamedialog.dialog( "open" );
+                //processMaxlite1UpdateJson(formjson);
                 //showMsg();
                 //ShowCurrentTime();
                 //processMaxlite1UpdateJson("maxlite1updatejson btnRenameEditor clicked!!! = ");
@@ -227,9 +234,38 @@
             getSubDiv.appendChild(btnSearch);
         }
 
-        function showMsg() {
-            alert("showMsg function!");
+        function updateTips( t ) {
+          tips
+            .text( t )
+            .addClass( "ui-state-highlight" );
+          setTimeout(function() {
+            tips.removeClass( "ui-state-highlight", 1500 );
+          }, 500 );
         }
+ 
+        function checkLength( o, n, min, max ) {
+          if ( o.val().length > max || o.val().length < min ) {
+            o.addClass( "ui-state-error" );
+            updateTips( "Length of " + n + " must be between " +
+              min + " and " + max + "." );
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+        function checkRegexp( o, regexp, n ) {
+          if ( !( regexp.test( o.val() ) ) ) {
+            o.addClass( "ui-state-error" );
+            updateTips( n );
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+
+
     });
     </script>
     <script type = "text/javascript">
