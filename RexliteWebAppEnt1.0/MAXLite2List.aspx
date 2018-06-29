@@ -124,9 +124,6 @@
                allMAXAirFields = $( [] ).add( newDeviceName ),
                tips = $( ".validateTips" );
 
-        //var  newDeviceName= $( "#NewDeviceName" );
-	    //var  allMAXAirFields = $( [] ).add( newDeviceName );
-
         renamedialog = $( "#RenameDialog" ).dialog({
           autoOpen: false,
           height: 460,
@@ -273,9 +270,6 @@
             getSubDiv.appendChild(btnSearch);
         }
 
-
-
-
 	    function updateDeviceName() {
 		    var valid = true;
             allMAXAirFields.removeClass("ui-state-error");
@@ -305,9 +299,7 @@
        function updateTips( t ) {
           tips
             .text( t )    
-            .addClass( "ui-state-highlight" );  //$('p').css({"color":"green"});
-				
-	      //$('#validate-rename-dialog').css('color', '#000000');  $("#submittername").text("testing");
+            .addClass( "ui-state-highlight" );  
   
           setTimeout(function() {
             tips.removeClass( "ui-state-highlight", 1500 );
@@ -337,12 +329,6 @@
 
    } );
    </script>
-   <script type="text/javascript">
-    $(document).ready(function () {
-    
 
-       
-    });
-    </script>
 </body>
 </html>
