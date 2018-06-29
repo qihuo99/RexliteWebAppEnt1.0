@@ -5,8 +5,10 @@
 <head runat="server">
     <title>Rexlite MAXLite2 Device List</title>
     <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="css/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="Scripts/RexliteFunctions.js"></script>
     <link href="css/rexMain.css" rel="stylesheet" type="text/css" />
+    <link href="css/jquery-ui-themes-1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <style>
 	html {
 		height:100%;
@@ -54,9 +56,32 @@
         margin-right: auto;
         padding: 0;
     }
+    .validateTips {
+	    border: 1px solid transparent;
+	    padding: 0.3em;
+    }
 	</style>
 </head>
 <body>
+    <div id="RenameDialog" title="Rename Device">
+	  <p id="validate-rename-dialog" class="validateTips">All form fields are required.</p>
+	  <form id="RenameDeviceForm">
+		<fieldset>
+		  <label for="DeviceID">Device ID:</label><br />
+		  <input type="text" id="DeviceID" name="DeviceID" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #81F7F3;background-color: #E6E6E6;" readonly="true" />
+		  <br /><br />
+          <label for="OldDeviceName">Old Device Name:</label><br />
+		  <input type="text" id="OldDeviceName" name="OldDeviceName" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #81F7F3;background-color: #E6E6E6;"  readonly="true" />
+		  <br /><br />
+          <label for="DeviceID">New Device Name:</label><br />
+		  <input type="text" id="NewDeviceName" name="NewDeviceName" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #58D3F7;"  />
+		  
+  	      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		  <input type="submit" tabindex="-1" style="position:absolute; top:-2000px" />
+		</fieldset>
+	  </form>
+	</div><br /><br />
+
     <form id="form1" runat="server">
        <div>
              <div class="div.horizontal divlist"  style="width:100%;">
@@ -81,13 +106,50 @@
                 </div>
 	        </div>
             <asp:HiddenField ID="hidMAXLite2BleJsonList" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceID" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceSN" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceIDSN" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceOldName" runat="server" />
+            <asp:HiddenField ID="hidSelectedDeviceNewName" runat="server" />
             <div id="MAXLite2bottomDiv" class="bottomDiv">
 			    <img src="images/APP_Button_REXLiTE.png" width="280" height="12" />
 	        </div>
         </div>
     </form>
-    <script type="text/javascript">
-    $(document).ready(function () {
+    
+   <script>
+   $(function () {
+        var renamedialog, form,
+               newDeviceName= $( "#NewDeviceName" ),
+               allMAXAirFields = $( [] ).add( newDeviceName ),
+               tips = $( ".validateTips" );
+
+        //var  newDeviceName= $( "#NewDeviceName" );
+	    //var  allMAXAirFields = $( [] ).add( newDeviceName );
+
+        renamedialog = $( "#RenameDialog" ).dialog({
+          autoOpen: false,
+          height: 460,
+          width: 380,
+          modal: true,
+          buttons: {
+            "Rename Device": updateDeviceName,
+            Cancel: function() {	
+              renamedialog.dialog( "close" );
+		      $('#validate-rename-dialog').css('color', '#000000');  //back to black
+		      $("#validate-rename-dialog").text("All form fields are required.");
+		      $('#NewDeviceName').val("");
+            }
+          },
+           close: function (event) {
+                event.preventDefault(); 
+                //form[0].reset();
+                $("#RenameDeviceForm")[0].reset();
+                renamedialog.dialog( "close" );
+                allMAXAirFields.removeClass( "ui-state-error" );
+          }
+        });
+
         var j = 0;
         var jstr = $('input#hidMAXLite2BleJsonList').val();
         console.log("MAXLite2 jstr =" + jstr);
@@ -100,7 +162,7 @@
             alert("MAXLite2TopSearchBtn clicked!!!");
         });
 
-        if (checkIsEmpty(jstr))  //only do the following events if json is not empty
+        if (checkIsNotEmpty(jstr))  //only do the following events if json is not empty
         {
             console.log("jstr has value!");
             var blelist = JSON.parse(jstr);
@@ -163,6 +225,8 @@
             btnSearch.className = "btnSearch";
             var btnid = btn.id;
 
+            $('#h_v').val();
+
             // 3. Add event handler
             btn.addEventListener("click", function (event) {
                 event.preventDefault(); //this will prevent the click event to return anything. otherwise it will return false and prevent page redirect                  
@@ -180,6 +244,21 @@
             btnRenameEditor.addEventListener("click", function (event) {
                 event.preventDefault();
                 alert(btnRenameEditor.id);
+
+                $('#validate-rename-dialog').css('color', '#000000');  //back to black
+		        $("#validate-rename-dialog").text("All form fields are required.");
+                $('#NewDeviceName').val("");
+
+                $('#hidSelectedDeviceID').val(bleId);
+                $('#hidSelectedDeviceSN').val(sn);
+                $('#hidSelectedDeviceIDSN').val(bleId + sn);
+                $('#hidSelectedDeviceOldName').val(bleName);
+
+                $('#DeviceID').val(bleId + sn);
+                $('#OldDeviceName').val(bleName);
+                //$('#hidSelectedDeviceNewName').val(bleId + sn);
+                renamedialog.dialog( "open" );
+
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 
@@ -195,6 +274,74 @@
         }
 
 
+
+
+	    function updateDeviceName() {
+		    var valid = true;
+            allMAXAirFields.removeClass("ui-state-error");
+
+	 
+		    valid = valid && checkLength( newDeviceName, "New Device Name", 6, 14 );
+	        console.log("current valid status =" + valid );
+		    if (!valid){
+			    $('#validate-rename-dialog').css('color', 'red');    
+		    }
+		    //else 
+		    if ( valid ) {
+			    updateTips("");
+			    $('#validate-rename-dialog').css('color', '#000000');  //back to black
+			    $("#validate-rename-dialog").text("All form fields are required.");
+		        console.log("now valid status should be true =" + valid );
+						
+			    var getNewDeviceName = $('#NewDeviceName').val();
+			    $('#hidSelectedDeviceNewName').val(getNewDeviceName);
+			    $('#NewDeviceName').val("");
+			    //alert(getNewDeviceName);
+			    renamedialog.dialog( "close" );;
+		    }
+		    return valid;
+	    }
+       
+       function updateTips( t ) {
+          tips
+            .text( t )    
+            .addClass( "ui-state-highlight" );  //$('p').css({"color":"green"});
+				
+	      //$('#validate-rename-dialog').css('color', '#000000');  $("#submittername").text("testing");
+  
+          setTimeout(function() {
+            tips.removeClass( "ui-state-highlight", 1500 );
+          }, 500 );
+        }
+
+        function checkLength( o, n, min, max ) {
+          if ( o.val().length > max || o.val().length < min ) {
+            o.addClass( "ui-state-error" );
+            updateTips( "Length of " + n + " must be between " +
+              min + " and " + max + "." );
+            return false;
+          } else {
+            return true;
+          }
+        }
+ 
+        function checkRegexp( o, regexp, n ) {
+          if ( !( regexp.test( o.val() ) ) ) {
+            o.addClass( "ui-state-error" );
+            updateTips( n );
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+   } );
+   </script>
+   <script type="text/javascript">
+    $(document).ready(function () {
+    
+
+       
     });
     </script>
 </body>
