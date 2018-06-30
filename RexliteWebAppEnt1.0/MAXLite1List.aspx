@@ -59,7 +59,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods = "true"></asp:ScriptManager>
+        <asp:ScriptManager ID="MAXLite1ScriptManager1" runat="server" EnablePageMethods = "true"></asp:ScriptManager>
         <div>
         Your Name : 
         <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
@@ -214,11 +214,11 @@
                 console.log(formjson);  //'{"DeviceID": "' + $("#hidRenameDeviceIDSNSelected").val()
                 
                 $('#hidMAXLite1DeviceRenameJson').val(formjson);
-                renamedialog.dialog( "open" );
+                //renamedialog.dialog( "open" );
                 //processMaxlite1UpdateJson(formjson);
                 //showMsg();
-                //ShowCurrentTime();
-                //processMaxlite1UpdateJson("maxlite1updatejson btnRenameEditor clicked!!! = ");
+               // ShowCurrentTime();
+                processMaxlite1UpdateJson("maxlite1updatejson btnRenameEditor clicked!!! = ");
 
                 // window.location.replace("MaxSceneDetails.aspx");
             });

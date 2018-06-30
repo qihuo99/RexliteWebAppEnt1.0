@@ -7,8 +7,9 @@
     <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="css/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="Scripts/RexliteFunctions.js"></script>
-    <link href="css/rexMain.css" rel="stylesheet" type="text/css" />
     <link href="css/jquery-ui-themes-1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="css/rexMain.css" rel="stylesheet" type="text/css" />
+
     <style>
 	html {
 		height:100%;
@@ -63,27 +64,30 @@
 	</style>
 </head>
 <body>
-    <div id="RenameDialog" title="Rename Device">
-	  <p id="validate-rename-dialog" class="validateTips">All form fields are required.</p>
-	  <form id="RenameDeviceForm">
-		<fieldset>
-		  <label for="DeviceID">Device ID:</label><br />
-		  <input type="text" id="DeviceID" name="DeviceID" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #81F7F3;background-color: #E6E6E6;" readonly="true" />
-		  <br /><br />
-          <label for="OldDeviceName">Old Device Name:</label><br />
-		  <input type="text" id="OldDeviceName" name="OldDeviceName" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #81F7F3;background-color: #E6E6E6;"  readonly="true" />
-		  <br /><br />
-          <label for="DeviceID">New Device Name:</label><br />
-		  <input type="text" id="NewDeviceName" name="NewDeviceName" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #58D3F7;"  />
-		  
-  	      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-		  <input type="submit" tabindex="-1" style="position:absolute; top:-2000px" />
-		</fieldset>
-	  </form>
-	</div><br /><br />
+
 
     <form id="form1" runat="server">
+       <asp:ScriptManager ID="MAXLite2ScriptManager1" runat="server" EnablePageMethods = "true"></asp:ScriptManager>
        <div>
+            <div id="RenameDialog" title="Rename Device">
+                <p id="validate-rename-dialog" class="validateTips">All form fields are required.</p>
+	            <div id="RenameDeviceForm"><!--begin the dialog form -->
+		        <fieldset>
+		            <label for="DeviceID">Device ID:</label><br />
+		            <input type="text" id="DeviceID" name="DeviceID" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #81F7F3;background-color: #E6E6E6;" readonly="true" />
+		            <br /><br />
+                    <label for="OldDeviceName">Old Device Name:</label><br />
+		            <input type="text" id="OldDeviceName" name="OldDeviceName" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #81F7F3;background-color: #E6E6E6;"  readonly="true" />
+		            <br /><br />
+                    <label for="DeviceID">New Device Name:</label><br />
+		            <input type="text" id="NewDeviceName" name="NewDeviceName" value="" class="text ui-widget-content ui-corner-all" style="border: 1px solid #58D3F7;"  />
+		  
+  	                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		            <input type="submit" tabindex="-1" style="position:absolute; top:-2000px" />
+		        </fieldset>
+	            </div><!-- ending the dialog form -->
+	        </div><br /><br />
+
              <div class="div.horizontal divlist"  style="width:100%;">
 		        <div id="MAXLite2Top" class="ListPageTopDiv">
 			        <div id="MAXLite2BackBtn" style="float:left;">
@@ -139,11 +143,12 @@
             }
           },
            close: function (event) {
-                event.preventDefault(); 
-                //form[0].reset();
-                $("#RenameDeviceForm")[0].reset();
-                renamedialog.dialog( "close" );
-                allMAXAirFields.removeClass( "ui-state-error" );
+              event.preventDefault(); 
+              //$("#RenameDeviceForm")[0].reset();
+              renamedialog.dialog( "close" );
+              allMAXAirFields.removeClass("ui-state-error");
+              alert("Rename Device maxlite2 dialog is closed!!!");
+              processMaxlite2UpdateJson("Rename Device maxlite2 is renamed!!!");
           }
         });
 
@@ -222,8 +227,6 @@
             btnSearch.className = "btnSearch";
             var btnid = btn.id;
 
-            $('#h_v').val();
-
             // 3. Add event handler
             btn.addEventListener("click", function (event) {
                 event.preventDefault(); //this will prevent the click event to return anything. otherwise it will return false and prevent page redirect                  
@@ -254,8 +257,10 @@
                 $('#DeviceID').val(bleId + sn);
                 $('#OldDeviceName').val(bleName);
                 //$('#hidSelectedDeviceNewName').val(bleId + sn);
-                renamedialog.dialog( "open" );
-
+                renamedialog.dialog("open");
+                //processMaxlite2UpdateJson(bleId);
+                //alert("Rename Device maxlite2 process is completed!!!");
+                //processMaxlite2UpdateJson("Rename Device maxlite2 is renamed!!!");
                 // window.location.replace("MaxSceneDetails.aspx");
             });
 
@@ -329,6 +334,14 @@
 
    } );
    </script>
+   <script type = "text/javascript">
+        function processMaxlite2UpdateJson(maxlite2updatejson) {
+            PageMethods.SaveMAXLite2UpdateJsonFile(maxlite2updatejson, OnMAXLite2UpdateSuccess);
+        }
+        function OnMAXLite2UpdateSuccess(response, userContext, methodName) {
+            alert(response);
+        }
 
+   </script>
 </body>
 </html>

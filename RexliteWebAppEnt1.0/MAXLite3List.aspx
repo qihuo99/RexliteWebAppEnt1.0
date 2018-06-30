@@ -5,7 +5,9 @@
 <head runat="server">
     <title>Rexlite MAXLite3 Device List</title>
     <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="css/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="Scripts/RexliteFunctions.js"></script>
+    <link href="css/jquery-ui-themes-1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="css/rexMain.css" rel="stylesheet" type="text/css" />
     <style>
 	html {

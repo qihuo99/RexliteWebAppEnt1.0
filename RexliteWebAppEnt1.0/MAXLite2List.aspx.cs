@@ -26,5 +26,56 @@ namespace RexliteWebAppEnt1._0
         {
 
         }
+
+        [System.Web.Services.WebMethod]
+        public static string SaveMAXLite2UpdateJsonFile(string maxlite1json)
+        {
+            RexliteLib rexliteMAXLite1Lib = new RexliteLib();
+            var json = string.Empty;
+            try
+            {
+                //bool fileSt = rexliteMAXLite1Lib.FormatAndSaveJsonFile(maxlite1json, ExtensionMethods.MAXLite1UpdateJsonHeader, ExtensionMethods.MAXLite1UpdateCmd, "create");
+
+                return maxlite1json + " -- MAXLite2Update File is saved!!!  ";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        [System.Web.Services.WebMethod]
+        public static bool SaveMAXLite2UpdateJsonFile2(string maxlite2json)
+        {
+            var json = maxlite2json;
+
+            MAXLite2 maxLite2 = new MAXLite2();
+            var tmp = maxLite2.getHiddenValues();
+
+            //var getMaxlite3json = hidRenameDeviceJson.Value;
+            //hidRenameDeviceJson.Value;
+            //bool getSt = RexliteLib.
+            //bool getSt = rexliteLib.FormatAndSaveJsonFile(maxlite3json, ExtensionMethods.MAXLite3UpdateJsonHeader, ExtensionMethods.MAXLite3UpdateFile);
+
+
+            //return "Hello " + name + Environment.NewLine + "The Current Time is: "
+            //    + DateTime.Now.ToString();
+            return true;
+        }
+
+        public string getHiddenValues()
+        {
+            string str = string.Empty;
+            var devieIDSN = hidSelectedDeviceIDSN.Value;
+
+
+
+            str = str + devieIDSN;
+            return str;
+        }
+
+
+
+
     }
 }
