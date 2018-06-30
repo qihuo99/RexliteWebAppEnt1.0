@@ -544,6 +544,7 @@
     <Content Include="App_Data\MAXAirDeviceList.json" />
     <Content Include="App_Data\MAXLite1Update.json" />
     <Content Include="App_Data\MAXAirID_101.json" />
+    <Content Include="App_Data\MAXLite2Update.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\APP_Button_Sleep-ON.png" />
     <Content Include="images\APP_Button_Time-ING.png" />

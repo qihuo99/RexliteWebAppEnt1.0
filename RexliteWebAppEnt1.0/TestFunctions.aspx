@@ -45,54 +45,12 @@
             $("#OldDeviceName").val(OldDeviceName);
         }
 
-        dialog = $( "#RenameDialog" ).dialog({
-            autoOpen: false,
-            height: 400,
-            width: 350,
-            modal: true,
-            buttons: {
-            "Rename Device : ": addUser,
-            Cancel: function() {
-                dialog.dialog( "close" );
-            }
-            },
-            close: function() {
-            form[0].reset();
-            allFields.removeClass( "ui-state-error" );
-            }
-        });
-	    //var obj = {"nissan": "sentra", "color": "green"};
-	    //var obj2 = JSON.stringify(obj);
-	    ////alert(obj2);
-	
-	    //var formjson = '{"name": "' + $("#DeviceID").val() + '", "id": "' + $("#DeviceIDclass").val() + '" }';
-     //   alert(formjson);
 
-        $( "#update-maxlite1" ).button().on( "click", function() {
-            dialog.dialog("open");
-        });
 	
       });
     </script>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div id="RenameDialog" title="Rename Device">
-	        <p class="validateTips">All form fields are required.</p>
-            <fieldset>
-		        <label for="DeviceID">Device ID:</label>
-		        <input type="text" id="DeviceID" name="DeviceID" value="" class="text ui-widget-content ui-corner-all" disabled="disabled" />
-                <label for="OldDeviceName">Old Device Name:</label>
-		        <input type="text" id="OldDeviceName" name="OldDeviceName" value="" class="text ui-widget-content ui-corner-all" disabled="disabled" />
-                <label for="DeviceID">New Device Name:</label>
-		        <input type="text" id="NewDeviceName" name="NewDeviceName" value="" class="text ui-widget-content ui-corner-all" />
-		  
-  	            <!-- Allow form submission with keyboard without duplicating the dialog button -->
-		        <input type="submit" tabindex="-1" style="position:absolute; top:-2000px" />
-		    </fieldset>
-            <button id="update-maxlite1">Update MAXLite1 Device</button>
-
-	    </div>
-    </form>
+    
 </body>
 </html>

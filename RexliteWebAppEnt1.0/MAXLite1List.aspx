@@ -218,7 +218,7 @@
                 //processMaxlite1UpdateJson(formjson);
                 //showMsg();
                // ShowCurrentTime();
-                processMaxlite1UpdateJson("maxlite1updatejson btnRenameEditor clicked!!! = ");
+                processMaxlite1UpdateJson(formjson);
 
                 // window.location.replace("MaxSceneDetails.aspx");
             });

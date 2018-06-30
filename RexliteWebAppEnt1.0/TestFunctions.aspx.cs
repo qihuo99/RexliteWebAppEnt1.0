@@ -15,16 +15,58 @@ namespace RexliteWebAppEnt1._0
         protected void Page_Load(object sender, EventArgs e)
         {
             //TestJsonUpdate();
-            TestModalWindowFunction();
+            bool getSt = FindCertainValuesInJsonFile2(ExtensionMethods.MAXLite2UpdateFile, "MAXLite2DeviceIDSN", "16000000000006");
         }
 
-        public void TestModalWindowFunction()
+
+        public void AppendToMaxliteJsonFile()
         {
+            string fileToSearch = ExtensionMethods.MAXLite2UpdateFile;
+            //get the Json filepath  
+            string getPath = Server.MapPath("~/App_Data/");
+            string getfile = getPath + fileToSearch;
+
+            //deserialize JSON from file  
+            string Json = File.ReadAllText(getfile);
+            JObject jObject = JObject.Parse(Json);
 
 
 
+        }
 
 
+        public bool FindCertainValuesInJsonFile2(string fileToSearch, string jsonAttrToSearch, string valueToSearch)
+        {
+            bool valFound = false;
+
+            //get the Json filepath  
+            //string file = Server.MapPath("~/App_Data/MAXLite2Update.json");
+
+            //get the Json filepath  
+            string getPath = Server.MapPath("~/App_Data/");
+            string getfile = getPath + fileToSearch;
+            //getfile = getfile + ExtensionMethods.MAXAirDeviceJsonList;
+
+            //deserialize JSON from file  
+            string Json = File.ReadAllText(getfile);
+            JObject jObject = JObject.Parse(Json);
+
+            var formatSearchAttribute = ".." + jsonAttrToSearch;
+            //var classNameTokens = jObject.SelectTokens("..MAXLite2DeviceIDSN");
+
+            var attrNameTokens = jObject.SelectTokens(formatSearchAttribute);
+            var values = attrNameTokens.Select(x => (x as JValue).Value);
+            //string getInnerValue = values;
+
+            foreach (string val in values)
+            {
+                if (val.Equals(valueToSearch))
+                {
+                    valFound = true;
+                }
+            }
+
+            return valFound;
         }
 
         public void TestJsonUpdate()
@@ -67,8 +109,8 @@ namespace RexliteWebAppEnt1._0
             //jsonObj["Bots"][0]["Password"] = "new password";
             //string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
             //File.WriteAllText("settings.json", output);
-
-
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -123,6 +124,34 @@ namespace RexliteWebAppEnt1._0
             //ft = 1023, this is the highest brightness, 0-1023 => 1024 in total
             //return bb;
             return cc;
+        }
+
+        public bool FindCertainValuesInJsonFile(string fileToSearch, string jsonAttrToSearch, string valueToSearch)
+        {
+            bool valFound = false;
+
+            //get the Json filepath  
+            string getPath = HttpContext.Current.Server.MapPath("~/App_Data/");
+            string getfile = getPath + fileToSearch;
+
+            //deserialize JSON from file  
+            string Json = File.ReadAllText(getfile);
+            JObject jObject = JObject.Parse(Json);
+
+            var formatSearchAttribute = ".." + jsonAttrToSearch;
+            //var classNameTokens = jObject.SelectTokens("..MAXLite2DeviceIDSN");
+
+            var attrNameTokens = jObject.SelectTokens(formatSearchAttribute);
+            var values = attrNameTokens.Select(x => (x as JValue).Value);
+
+            foreach (string val in values)
+            {
+                if (val.Equals(valueToSearch))
+                {
+                    valFound = true;
+                }
+            }
+            return valFound;
         }
 
         public string ConvertSingleHexStringToJson(string str)
